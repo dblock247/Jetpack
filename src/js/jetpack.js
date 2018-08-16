@@ -1,4 +1,10 @@
 /**
+ * Creator: Londre Blocker
+ * Date: 2018.08.16
+ */
+
+
+/**
  * HTMLFormElement Prototypes
  */
 
