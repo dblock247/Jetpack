@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    let data$ = null;
+    let vals$ = null;
+    let serial$ = null;
+    let form$ = null;
+
+    window.onload = function () {
+    };
+
+    function serializeObject(array) {
+        let data = {};
+
+        for (let i = 0; i < array.length; ++i) {
+            data[array[i].name] = array[i].value;
+        }
+
+        return data;
+    }
+
+    function getObject(form) {
+        let data = {};
+
+        for (let i = 0; i < form.elements.length; ++i) {
+            let type = form.elements[i].type;
+            let checked = form.elements[i].checked;
+
+            if ((type === 'checkbox' || type === 'radio') && !checked)
+                continue;
+
+            if (form.elements[i].value === '')
+                continue;
+
+            if(form.elements[i].name.contains('[')) {
+                if(!data[form.elements[i].name.split('[').first])
+                    data[form.elements[i].name.split('[').first] = [];
+
+                data[form.elements[i].name.split('[').first]
+                    .push({[form.elements[i].name
+                            .split('[').last.split(']').first]: form.elements[i].value});
+
+                continue;
+            }
+
+            data[form.elements[i].name] = form.elements[i].value;
+        }
+
+        return data;  }
+
+    function onSendData(sender, e) {
+
+        console.clear();
+        //
+        var test = getObject(sender);
+        console.log(test);
+
+        // console.log("// Event attributes");
+        // console.log(e);
+        // console.log(e.target.attributes);
+        // console.log(e.target.attributes.action.value);
+        //
+        // console.log("// Form attributes");
+        // console.log(sender);
+        // console.log(sender.model);
+        // console.log(sender.model.Color.first);
+        // console.log(sender.model.Color.last);
+        // console.log(sender.blueprint);
+        // console.log(sender.query);
+        // console.log(sender.action);
+        //
+        //
+        // console.log(event.srcElement.model);
+        // console.log("street".capitalize());
+    }
+
+
+
+</script>
+
+
+<form onsubmit="event.preventDefault(); onSendData(this, event)" action="/Apple/face">
+    <div>
+        <input type="text" value="Londre" name="FirstName">
+    </div>
+    <input type="text" value="Blocker" name="LastName">
+    <input type="text" value="35" name="Age">
+    <input type="text" value="35" name="Color[One]">
+    <input type="text" value="35" name="Color[Two]">
+    <input type="checkbox" value="true" name="Active" checked>
+    <input type="radio" name="Gender" value="male" checked> Male<br>
+    <input type="radio" name="Gender" value="female"> Female<br>
+
+    <select name="Cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="fiat">Fiat</option>
+        <option value="audi">Audi</option>
+
+        <textarea name="Message" rows="10" cols="30">The cat was playing in the garden.</textarea>
+    </select>
+
+    <input list="browsers" name="Browser">
+    <datalist id="browsers">
+        <option value="Internet Explorer">
+        <option value="Firefox">
+        <option value="Chrome">
+        <option value="Opera">
+        <option value="Safari">
+    </datalist>
+
+    <input type="number" id="b" name="b" value="50">
+    <output name="x" for="a b"></output>
+    <!--<button>Send</button>-->
+    <input type="submit" name="Submit">
+
+
+</form>
+
+</body>
+</html>
